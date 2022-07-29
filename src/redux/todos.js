@@ -46,9 +46,9 @@ export const todoSlice = createSlice({
       state.id = "";
       state.isEdit = false;
     },
-    doneTodo: (state, action) => {
+    changeStatus: (state, action) => {
       state.todos = state.todos.map((todo) =>
-        todo.id === action.payload.id ? { ...todo, isDone: true } : todo
+        todo.id === action.payload.id ? { ...todo, isDone: !todo.isDone } : todo
       );
     },
   },
@@ -57,7 +57,7 @@ export const {
   addTodo,
   removeTodo,
   getById,
-  doneTodo,
+  changeStatus,
   editTodo,
   cancelEditTodo,
 } = todoSlice.actions;

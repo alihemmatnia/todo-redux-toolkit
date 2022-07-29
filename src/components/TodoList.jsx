@@ -7,11 +7,11 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import { useSelector, useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { removeTodo, doneTodo, getById } from "../redux/todos";
-
+import { removeTodo, changeStatus, getById } from "../redux/todos";
+import RemoveDoneIcon from "@mui/icons-material/RemoveDone";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
 const TodoList = () => {
   const todos = useSelector((state) => state.todo.todos);
   const dispatch = useDispatch();
@@ -64,10 +64,23 @@ const TodoList = () => {
                       if (!row.isDone) {
                         return (
                           <IconButton
-                            onClick={() => dispatch(doneTodo({ id: row.id }))}
+                            onClick={() =>
+                              dispatch(changeStatus({ id: row.id }))
+                            }
                             size="small"
                           >
-                            <DoneOutlineIcon></DoneOutlineIcon>
+                            <DoneAllIcon></DoneAllIcon>
+                          </IconButton>
+                        );
+                      } else {
+                        return (
+                          <IconButton
+                            onClick={() =>
+                              dispatch(changeStatus({ id: row.id }))
+                            }
+                            size="small"
+                          >
+                            <RemoveDoneIcon></RemoveDoneIcon>
                           </IconButton>
                         );
                       }

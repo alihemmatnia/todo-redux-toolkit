@@ -12,11 +12,11 @@ const TodoAdd = () => {
   const dispatch = useDispatch();
   const [text, setText] = useState("");
   const [id, setId] = useState("");
+  const [isEdit, setEdit] = useState(false);
+  const [isError, setError] = useState(false);
 
   const todo = useSelector((state) => state.todo);
-  const [isEdit, setEdit] = useState(false);
 
-  const [isError, setError] = useState(false);
   useEffect(() => {
     if (todo.isEdit) {
       setText(todo.text);
@@ -24,7 +24,7 @@ const TodoAdd = () => {
 
       setEdit(true);
     }
-  }, [todo.isEdit, todo.text]);
+  }, [todo.isEdit, todo.text, todo.id]);
   const AddTodo = () => {
     if (text !== "") {
       if (isEdit) {
@@ -32,7 +32,6 @@ const TodoAdd = () => {
       } else {
         dispatch(addTodo(text));
       }
-      setError(false);
       cancelEdit();
     } else {
       setError(true);
@@ -57,7 +56,10 @@ const TodoAdd = () => {
                 AddTodo();
               }
             }}
-            onChange={(e) => setText(e.target.value)}
+            onChange={(e) => {
+              setError(false);
+              setText(e.target.value);
+            }}
             autoComplete="off"
             defaultValue={text}
             value={text}
@@ -81,7 +83,7 @@ const TodoAdd = () => {
                   </Button>
                   <Button
                     className="mt-2 col-2"
-                    variant="outlined"
+                    variant="contained"
                     color="error"
                     onClick={() => cancelEdit()}
                   >
